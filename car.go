@@ -8,15 +8,15 @@ import (
 
 var (
 	// pin layout from https://pinout.xyz/pinout/pin15_gpio22
-	// pin 38
-	PinRightMotorsForward = rpio.Pin(20)
 	// pin 40
-	PinRightMotorsBackward = rpio.Pin(21)
+	PinRightMotorsForward = rpio.Pin(21)
+	// pin 38
+	PinRightMotorsBackward = rpio.Pin(20)
 
-	// pin 13
-	PinLeftMotorsForward = rpio.Pin(27)
-	//pin 15
-	PinLeftMotorsBackward = rpio.Pin(22)
+	// pin 15
+	PinLeftMotorsForward = rpio.Pin(22)
+	//pin 13
+	PinLeftMotorsBackward = rpio.Pin(27)
 )
 
 func CreateCar() Car {
@@ -55,6 +55,22 @@ func (c *Car) backward() {
 	PinLeftMotorsForward.Low()
 	PinRightMotorsBackward.High()
 	PinLeftMotorsBackward.High()
+}
+
+func (c *Car) left() {
+	log.Println("CAR: Turning left")
+	PinRightMotorsForward.High()
+	PinLeftMotorsForward.Low()
+	PinRightMotorsBackward.Low()
+	PinLeftMotorsBackward.High()
+}
+
+func (c *Car) right() {
+	log.Println("CAR: Turning right")
+	PinRightMotorsForward.Low()
+	PinLeftMotorsForward.High()
+	PinRightMotorsBackward.High()
+	PinLeftMotorsBackward.Low()
 }
 
 func (c *Car) stop() {
